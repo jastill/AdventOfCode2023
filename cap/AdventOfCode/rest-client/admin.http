@@ -1,14 +1,11 @@
 @base_url = http://localhost:4004
 @admin_path = /input-admin
 
-#######
-## Insert the Input file
-POST {{base_url}}{{admin_path}}/InsertInputFile HTTP/1.1
-Content-Type: application/json
+####
+## Get the Metadata
+GET {{base_url}}{{admin_path}}/$metadata HTTP/1.1
 
- {
-    "input":{
-        "field1":124,
-        "field2":"Value"
-    }
-}
+#######
+## Insert the Calibration Values
+POST {{base_url}}{{admin_path}}/InsertCalibrationValues() HTTP/1.1
+Content-Type: application/json

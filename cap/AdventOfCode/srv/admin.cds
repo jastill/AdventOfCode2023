@@ -1,3 +1,3 @@
 service InputAdmin {
-    action   InsertInputFile(input : String) returns String;
+    action   InsertCalibrationValues(input : String) returns String;
 }
