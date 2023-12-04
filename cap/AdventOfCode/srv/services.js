@@ -78,7 +78,7 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService { init() 
                     var found = true
                     break
                   }
-                  if (text.endsWith(numberValues[j].number)) {
+                  if (text.startsWith(numberValues[j].number)) {
                     text = text.replace(numberValues[j].number, numberValues[j].value)
                     returntext = returntext.replace(numberValues[j].number, numberValues[j].value)
                     
@@ -91,8 +91,8 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService { init() 
                 }
               }
 
-              console.log(str)
-              console.log(returntext)
+              //console.log(str)
+              //console.log(returntext)
 
               return returntext
               //return str.replace(/one/g, '1').replace(/two/g, '2').replace(/three/g, '3').replace(/four/g, '4').replace(/five/g, '5').replace(/six/g, '6').replace(/seven/g, '7').replace(/eight/g, '8').replace(/nine/g, '9') // 55266
