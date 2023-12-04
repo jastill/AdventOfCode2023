@@ -21,26 +21,19 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService { init() 
             // Select Help https://cap.cloud.sap/docs/node.js/cds-ql#select-from
             let calibrations = await SELECT.from (Calibration)
 
-            //console.log(calibrations)
+            // Process each line, may be an easier way to do this.
+            let process  = (line) => {
+              let digits = line.match(/\d+/g).join('')
+              if (digits.length < 1) {
+                return 0
+              } 
+              let firstDigit = digits.charAt(0)
+              let lastDigit = digits.charAt(digits.length - 1)
+              let number = firstDigit + lastDigit
+              return parseInt(number)
+            }
 
-            var sum = 0;
-
-            // Simple way, do it here, better way, push it down to the database
-            calibrations.forEach(row => {
-                //let firstDigit = row.match(/\d/)
-                console.log(row)
-                let digits = row.line.match(/\d+/g).join('')
-                console.log(digits)
-                let firstDigit = digits.charAt(0)
-                let lastDigit = digits.charAt(digits.length - 1)
-                let number = firstDigit + lastDigit
-                console.log(firstDigit+" + "+lastDigit+" = "+number)
-                sum += parseInt(number)
-            })
-            
-
-            //return calibrations.reduce((sum, row) => sum + row.CalibrationValue, 0)
-            return sum
+            return calibrations.reduce((sum, row) => sum + process(row.line), 0)
         }
     )
   
