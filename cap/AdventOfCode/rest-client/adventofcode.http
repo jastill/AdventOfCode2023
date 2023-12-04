@@ -1,5 +1,5 @@
 @base_url = http://localhost:4004
-@advent_of_code_path = /advent-of-code2023
+@advent_of_code_path = /odata/v4/advent-of-code2023
 
 ####
 ## Get the Metadata
