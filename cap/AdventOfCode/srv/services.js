@@ -18,10 +18,29 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService { init() 
      */
     this.on('SumCalibrationValues', async () => {
             //let { book:id, quantity } = req.data
+            // Select Help https://cap.cloud.sap/docs/node.js/cds-ql#select-from
             let calibrations = await SELECT.from (Calibration)
 
-            console.log(calibrations)
-            return calibrations.reduce((sum, row) => sum + row.CalibrationValue, 0)
+            //console.log(calibrations)
+
+            var sum = 0;
+
+            // Simple way, do it here, better way, push it down to the database
+            calibrations.forEach(row => {
+                //let firstDigit = row.match(/\d/)
+                console.log(row)
+                let digits = row.line.match(/\d+/g).join('')
+                console.log(digits)
+                let firstDigit = digits.charAt(0)
+                let lastDigit = digits.charAt(digits.length - 1)
+                let number = firstDigit + lastDigit
+                console.log(firstDigit+" + "+lastDigit+" = "+number)
+                sum += parseInt(number)
+            })
+            
+
+            //return calibrations.reduce((sum, row) => sum + row.CalibrationValue, 0)
+            return sum
         }
     )
   
