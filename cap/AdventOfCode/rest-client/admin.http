@@ -1,6 +1,6 @@
 @base_url = http://localhost:4004
 @admin_path = /odata/v4/input-admin
-
+@cube_conundrum_path = /odata/v4/cube-conundrum
 ####
 ## Get the Metadata
 GET {{base_url}}{{admin_path}}/$metadata HTTP/1.1
@@ -13,4 +13,9 @@ Content-Type: application/json
 #######
 ## Process the GameData and insert into the database
 POST {{base_url}}{{admin_path}}/ProcessGameData HTTP/1.1
+Content-Type: application/json
+
+#######
+## Count the records
+GET {{base_url}}{{cube_conundrum_path}}/Game/$count HTTP/1.1
 Content-Type: application/json

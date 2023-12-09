@@ -13,10 +13,16 @@ module.exports = cds.service.impl(async function (srv) {
 
         // Select Help https://cap.cloud.sap/docs/node.js/cds-ql#select-from
         let attempts = await SELECT.from (GameData)
-
         var gameDataEntries = []
 
-        req.data.attempts = attempts
+        if (attempts.length <= 0) {
+            return "No Game Data Found"
+        }
+
+        console.log("Attempts: "+attempts.length)
+
+        let deleteRestul = await DELETE.from(Game);
+
         // Loop through the data extracting the game ID from the data and each entry seperated by a comma
         var gameDataArray = [];
         attempts.forEach(element => {
@@ -55,7 +61,7 @@ module.exports = cds.service.impl(async function (srv) {
         console.log("Insert Status: "+insertStatus)
         console.log("Insert Result: "+insertResult)
 
-        return req.data;
+        return insertResult;
     })
 
     /**
