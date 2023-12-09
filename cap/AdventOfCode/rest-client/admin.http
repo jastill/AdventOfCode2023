@@ -1,5 +1,5 @@
 @base_url = http://localhost:4004
-@admin_path = /input-admin
+@admin_path = /odata/v4/input-admin
 
 ####
 ## Get the Metadata
@@ -8,4 +8,9 @@ GET {{base_url}}{{admin_path}}/$metadata HTTP/1.1
 #######
 ## Insert the Calibration Values
 POST {{base_url}}{{admin_path}}/InsertCalibrationValues() HTTP/1.1
+Content-Type: application/json
+
+#######
+## Insert the Calibration Values
+POST {{base_url}}{{admin_path}}/ProcessGameData HTTP/1.1
 Content-Type: application/json
