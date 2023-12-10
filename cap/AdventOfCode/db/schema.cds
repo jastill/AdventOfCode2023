@@ -18,6 +18,7 @@ Entity GameData: cuid {
  */
 Entity Game: cuid {
     gameID: Integer;
+    turnID: Integer;
     entryID: Integer;
     color: String(1024);
     count: Integer;

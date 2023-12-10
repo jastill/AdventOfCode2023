@@ -12,20 +12,21 @@ module.exports = cds.service.impl(async function (srv) {
         req.data["AdditionalField"] = "AdditionalFieldValue";
 
         // Select Help https://cap.cloud.sap/docs/node.js/cds-ql#select-from
-        let attempts = await SELECT.from (GameData)
+        let games = await SELECT.from (GameData)
         var gameDataEntries = []
 
-        if (attempts.length <= 0) {
+        if (games.length <= 0) {
             return "No Game Data Found"
         }
 
-        console.log("Attempts: "+attempts.length)
+        console.log("Games: "+games.length)
 
         let deleteRestul = await DELETE.from(Game);
 
-        // Loop through the data extracting the game ID from the data and each entry seperated by a comma
         var gameDataArray = [];
-        attempts.forEach(element => {
+
+        // Loop through the data extracting the game ID from the data and each entry seperated by a comma
+        games.forEach(element => {
             console.log("Element: "+JSON.stringify(element))
 
             var gameData = element.attempt.split(":");
@@ -33,22 +34,33 @@ module.exports = cds.service.impl(async function (srv) {
             var gameID = gameIDString.split(" ")[1]
             var attempt = gameData[1];
 
-            var entries = attempt.split(",");
-        
-            var count = 1
-            // Loop through the entries and insert into the DB.
-            entries.forEach(entry => {
-                var entryArray = entry.trim().split(" ");
-                var gameDataEntry = {
-                    gameID: gameID,
-                    entryID: count,
-                    color: entryArray[1],
-                    count: entryArray[0]
-                }
+            // Each turn is seperated by a semi-colon
+            let turns = attempt.split(";");
 
-                gameDataEntries.push(gameDataEntry);
-                count++
-            })
+            console.log("Turns: "+turns.length)
+        
+            var turnCount = 1;
+            turns.forEach(turn => {
+                var count = 1
+                var entries = turn.split(",");
+                // Loop through the entries and insert into the DB.
+                entries.forEach(entry => {
+                    console.log("Entry: "+entry)
+                    var entryArray = entry.trim().split(" ");
+                    var gameDataEntry = {
+                        gameID: gameID,
+                        turnID: turnCount,
+                        entryID: count,
+                        color: entryArray[1],
+                        count: entryArray[0]
+                    }
+
+                    gameDataEntries.push(gameDataEntry);
+                    count++
+                })
+
+                turnCount++;
+            });
 
         });
 
@@ -57,9 +69,6 @@ module.exports = cds.service.impl(async function (srv) {
 
         let insertStatus = await INSERT.into(Game).entries(gameDataEntries);
         let insertResult = JSON.stringify(insertStatus.results)
-
-        console.log("Insert Status: "+insertStatus)
-        console.log("Insert Result: "+insertResult)
 
         return insertResult;
     })
