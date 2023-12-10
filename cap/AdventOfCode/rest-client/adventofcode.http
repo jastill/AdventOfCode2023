@@ -14,8 +14,9 @@ GET {{base_url}}{{advent_of_code_path}}/SumCalibrationValues() HTTP/1.1
 @day2_path = /odata/v4/cube-conundrum
 #######
 ## Get the number of valid games
-# 3968 Too High
-# 3891 Too High
-# 325
 # 2317 Yeah
 GET {{base_url}}{{day2_path}}/GetNumberOfValidGames(r=12,g=13,b=14) HTTP/1.1
+
+#######
+## Get the Power of Sets
+GET {{base_url}}{{day2_path}}/GetPowerOfSets() HTTP/1.1

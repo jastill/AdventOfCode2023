@@ -1,6 +1,55 @@
 module.exports = class AdventOfCode2023 extends cds.ApplicationService { init() {
 
     const { Game } = cds.entities('mobi.astill.adventofcode2023')
+    /**
+     * 
+     */
+    this.on('GetPowerOfSets', async () => {
+        let entries = await SELECT.from(Game).orderBy('gameID asc','turnID asc');
+
+        var minRed = 0
+        var minGreen = 0
+        var minBlue = 0
+
+        var powerOfSets = 0
+
+        var currentGameID = -99
+        var turn = -99
+
+        entries.forEach(element => {
+           // Loop through the entries and check each turn for a valid game
+            //console.log("Element: "+JSON.stringify(element))
+            
+
+            if (element.gameID != currentGameID) {
+                console.log("Game: "+currentGameID)
+
+                // New game reset the status
+                if (currentGameID != -99) {
+                    powerOfSets += minRed * minGreen * minBlue
+                }
+
+                minRed = 0;
+                minGreen = 0;
+                minBlue = 0;
+
+                currentGameID = element.gameID;
+            }
+            
+            if (element.color == "red") {
+                minRed = Math.max(minRed,element.count)
+            } else if (element.color == "green") {
+                minGreen = Math.max(minGreen,element.count)
+            } else if (element.color == "blue") {
+                minBlue = Math.max(minBlue,element.count)
+            }   
+            turn = element.turnID;
+        });
+
+        powerOfSets += minRed * minGreen * minBlue
+
+        return powerOfSets
+    }),
   
     /**
      * GetNumberOfValidGames

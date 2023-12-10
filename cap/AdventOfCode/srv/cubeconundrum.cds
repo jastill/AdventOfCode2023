@@ -5,4 +5,5 @@ service CubeConundrum {
     entity Game as projection on my.Game;
 
     function GetNumberOfValidGames(r:Integer, g:Integer, b:Integer) returns Integer;
+    function GetPowerOfSets() returns Integer;
 }
