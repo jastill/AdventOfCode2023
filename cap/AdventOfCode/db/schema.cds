@@ -23,3 +23,7 @@ Entity Game: cuid {
     color: String(1024);
     count: Integer;
 }
+
+Entity EngineSchematic: cuid {
+    entry: String(1024);
+}

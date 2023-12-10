@@ -20,3 +20,10 @@ GET {{base_url}}{{day2_path}}/GetNumberOfValidGames(r=12,g=13,b=14) HTTP/1.1
 #######
 ## Get the Power of Sets
 GET {{base_url}}{{day2_path}}/GetPowerOfSets() HTTP/1.1
+
+
+#### Day 3
+@day3_path = /odata/v4/engine-schematic
+#######
+## Get Sum of Part Numbers
+GET {{base_url}}{{day3_path}}/GetSumOfPartNumbers() HTTP/1.1
