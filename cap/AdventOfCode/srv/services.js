@@ -21,6 +21,9 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService { init() 
             // Select Help https://cap.cloud.sap/docs/node.js/cds-ql#select-from
             let calibrations = await SELECT.from (Calibration)
 
+            var sum = 0
+            var count = 1
+
             // Function to replace numbers spelt out with digits
             // The is very order specific as the Input.txt file has number words
             // that have overlapping numbers e.g. eightwo  
@@ -34,7 +37,7 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService { init() 
             // In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76
             // So it is the first number it finds in the string that get replaced, not order based of the numbers
             let numreplace = (str) => {
-              let numberValues = [{number: 'one', value: '1'}, {number: 'two', value: '2'}, {number: 'three', value: '3'}, {number: 'four', value: '4'}, {number: 'five', value: '5'}, {number: 'six', value: '6'}, {number: 'seven', value: '7'}, {number: 'eight', value: '8'}, {number: 'nine', value: '9'}]              
+              let numberValues = [{number: "one", value: '1'}, {number: "two", value: '2'}, {number: "three", value: '3'}, {number: "four", value: '4'}, {number: "five", value: '5'}, {number: "six", value: '6'}, {number: "seven", value: '7'}, {number: "eight", value: '8'}, {number: "nine", value: '9'}]              
 
               // Loop over string looking for match at the beginning of the string
               // If found replace with the number and return the string
@@ -71,17 +74,30 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService { init() 
               text = returntext
               for (let i = 0; i < returntext.length; i++) {
                 text = returntext.substring(returntext.length-i, returntext.length)
-                //console.log(text+" "+i)
+
                 for (let j = 0; j < numberValues.length; j++) {
                   let character = text.charAt(0)
+                  // Found a digit before finding text, so no need to look more
                   if (character >= '1' && character <= '9') {
+                    if(count == 15) console.log("digit found")
                     var found = true
                     break
                   }
+
+                  // Find a number string
                   if (text.startsWith(numberValues[j].number)) {
                     text = text.replace(numberValues[j].number, numberValues[j].value)
-                    returntext = returntext.replace(numberValues[j].number, numberValues[j].value)
+
+                    if(count == 15) console.log("number string found "+text)
+
+                    // The number text can be in the string twice. We are trying to replace the last occurence.
+                    var indexOfNumber = returntext.lastIndexOf(numberValues[j].number)
+                    var beginning = returntext.substring(0, indexOfNumber)
+
+                    returntext = beginning+text
                     
+                    if(count == 15) console.log("number string found "+returntext+" "+indexOfNumber)
+
                     var found = true
                     break
                   }
@@ -110,7 +126,9 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService { init() 
               let lastDigit = digits.charAt(digits.length - 1)
               let number = firstDigit + lastDigit
 
-              console.log(number)
+              sum += parseInt(number)
+              console.log(count+" "+line+"i "+number+" "+sum)
+              count++
               return parseInt(number)
             }
 
