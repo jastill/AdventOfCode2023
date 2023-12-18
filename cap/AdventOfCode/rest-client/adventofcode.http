@@ -1,4 +1,5 @@
 @base_url = http://localhost:4004
+#@advent_of_code_path = /odata/v4/advent-of-code2023
 @advent_of_code_path = /odata/v4/advent-of-code2023
 
 ####
@@ -24,6 +25,10 @@ GET {{base_url}}{{day2_path}}/GetPowerOfSets() HTTP/1.1
 
 #### Day 3
 @day3_path = /odata/v4/engine-schematic
+#######
+## Get Engine Schematics
+GET {{base_url}}{{day3_path}}/EngineSchematic HTTP/1.1
+
 #######
 ## Get Sum of Part Numbers
 GET {{base_url}}{{day3_path}}/GetSumOfPartNumbers() HTTP/1.1
