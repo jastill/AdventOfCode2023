@@ -36,11 +36,14 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService {
 
         console.log("line " + index + ":" + line);
 
+        var previousLine = null
+
         for (var i = 0; i < lineLength; i++) {
           // If character is a symbol, then we need to look around it to see if we can find a part number
           if (
             line[i] === "*" ||
             line[i] === "/" ||
+            line[i] === "@" ||
             line[i] === "-" ||
             line[i] === "%" ||
             line[i] === "&" ||
@@ -103,21 +106,28 @@ module.exports = class AdventOfCode2023 extends cds.ApplicationService {
             };
             sumOfPartNumbers += getRightNumber(line);
 
-            // Numbers above
+            // Numbers above. This could in theory be multiple part numbers, one on each diagonal.
             var getNumbersAbove = (aLine) => {
               console.log("Getting above part numbers");
-              let digit = aLine[i + 1];
-              if (digit >= "0" && digit <= "9") {
-                console.log(
-                  "Found a digit at position " + i + 1 + " in line " + index
-                );
+              if (index > 1) {
+                // Interesting choices now. If the character above is a digit, then there is one number.
+                // If the character above is not a digit, then we could have two part numbers
+                let digit = aLine[i + 1];
+                if (digit >= "0" && digit <= "9") {
+                  console.log(
+                    "Found a digit at position " + i + 1 + " in line " + index
+                  );
+                }
               }
               return 0;
             };
             //sumOfPartNumbers += getRightNumber(line);
 
-            // Numbers below
+            // Numbers below. This is interesting if we don't have the next line, it's a delayed event. I 
+            // bet we wished we had used a map now.......
           }
+        
+          previosLine = aLine
         }
 
         // If we find a part number, then we need to add it to the sumOfPartNumbers

@@ -6,3 +6,5 @@ For Day 2 there was a raw data table and a processed data table. The raw data ta
 
 CAP Code Jam with HANA Cloud setup
 https://github.com/SAP-samples/cap-hana-exercises-codejam
+
+Third install and the served odata path has changed again. the /odata/v4 part of the path is changing again.

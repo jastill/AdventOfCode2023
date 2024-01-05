@@ -24,7 +24,8 @@ GET {{base_url}}{{day2_path}}/GetPowerOfSets() HTTP/1.1
 
 
 #### Day 3
-@day3_path = /odata/v4/engine-schematic
+#@day3_path = /odata/v4/engine-schematic
+@day3_path = /engine-schematic
 #######
 ## Get Engine Schematics
 GET {{base_url}}{{day3_path}}/EngineSchematic HTTP/1.1
